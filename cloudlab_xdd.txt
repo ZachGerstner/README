@@ -1,0 +1,46 @@
+Gerstner Zachary I.
+1 September 2015
+
+Purpose Installing and Running XDD transfer
+==================================================================================
+Preference
+i. if you have password protected accounts, make sure that you install and
+   authorize ssh keys to allow uninterupted access between them.
+        ssh-keygen; cp ssh-keygen on both nodes; cat id_rsa.pub >> authorized_keys;
+==================================================================================
+1. Clone the master branch from Nick Mill's Git hub
+        git://github.com/nlmills/xdd.git
+1. Clone functional branch from Nick Mill's Git hub
+        git checkout e2e_xni
+2. cd into xdd dir and run autoconf
+        cd ./xdd;autoconf
+3. once autoconf finishes run autoheader
+        autoheader
+4. Verify that the clone and set up were the appropriate branches by checking
+   the log.
+        top of your git log should be 5f7abcd5b4db41523c487e9d34f9d0594caacc25
+
+5. Fetch ecdsa-0.11.tar.gz and pycrypto-2.6.1.tar.gz from Nick Mill's palmetto account
+        scp zigerst@user.palmetto.clemson.edu:/home/nlmills/xddshare/ecdsa-0.11.tar.gz contrib
+        scp zigerst@user.palmetto.clemson.edu:/home/nlmills/xddshare/pycrypto-2.6.1.tar.gz contrib
+
+6. In the event that Python is not fully installed, the following will be needed.
+        sudo apt-get install python-setuptools python-dev python-devel
+7. Configure xdd
+        ./configure --prefix=$HOME/sof/xdd --disable-ib --disable-xfs --disable-numa
+
+***NOTE: dont move will break the thing apparently after install***
+8. Make the following changes to the .bashrc file, ensure that you place the text at the TOP of the
+   file(ubuntu has something that prevents it from working...)
+        vim .bashrc
+        #for xdd mubojumbo
+        export PATH=$HOME/sof/xdd/bin:$PATH
+9. Log off and log back in to make changes effective. OR use source
+        source .bashrc
+10. test that the .bashrc change took effect.
+        cd
+        xddmcp -h
+11. Generate a test file of 1Gb
+        xdd -target file3 -op write -bytes 1000000000 -datapattern random
+12. Transfer the file
+        xddmcp -t 4 file1 node-1:/users/zigers0/
