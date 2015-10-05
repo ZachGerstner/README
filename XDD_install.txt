@@ -1,0 +1,71 @@
+Gerstner Zachary I.
+17 September 2015
+
+Purpose: Install XDD on Palmetto Cluster and Utah
+===============================================================================
+Preference
+i. if you have password protected accounts, make sure that you install and
+   authorize ssh keys to allow uninterupted access between them.
+        ssh-keygen; cp ssh-keygen on both nodes; cat id_rsa.pub >> authorized_keys;
+==================================================================================
+1. Clone the master branch from Nick Mill's Git hub
+        'git://github.com/nlmills/xdd.git'
+
+2. Clone functional branch from Nick Mill's Git hub
+        'cd ./xdd;git checkout e2e_xni'
+
+3. cd into xdd dir and run autoconf
+        'autoconf'
+
+4. once autoconf finishes run autoheader
+        'autoheader'
+
+5. Verify that the clone and set up were the appropriate branches by checking
+   the log.
+        top of your git log should be 5f7abcd5b4db41523c487e9d34f9d0594caacc25
+6. Fetch ecdsa-0.11.tar.gz and pycrypto-2.6.1.tar.gz from Nick Mill's palmetto account
+        'scp zigerst@user.palmetto.clemson.edu:/home/nlmills/
+                xddshare/ecdsa-0.11.tar.gz contrib'
+        'scp zigerst@user.palmetto.clemson.edu:/home/nlmills/
+                xddshare/pycrypto-2.6.1.tar.gz contrib'
+
+7. Configure xdd and make
+        './configure --prefix=$HOME/sof/txdd-c4566e6 --disable-ib --disable-xfs --disable-numa'
+        'make'
+        note:-c4566e6 is the hash of the version in use
+        note: on wagonaire do not disable xfs
+
+***NOTE: dont move will break the thing apparently after install***
+8. Make the following changes to the .bashrc file, ensure that you place the text at the TOP of the
+   file(ubuntu has something that prevents it from working...)
+       ' vim .bashrc
+        #for xdd mubojumbo
+        export PATH=$HOME/sof/xdd/bin:$PATH'
+
+9. Log off and log back in to make changes effective. OR use source
+        'source .bashrc'
+
+10. test that the .bashrc change took effect.
+        'cd;xddmcp -h'
+
+-->output should look similar to the following:
+        xddmcp -h
+        Usage: xddmcp [Options] [host[,host]:]sfile [host:]dfile
+
+        Options:
+          -h, --help            show this help message and exit
+          -a, --resume          enable resume for partially completed transfers
+          -d s|d|b              use direct I/O for the specified side (s for source, d
+                                for dest, b for both sides)
+          -o s|d|b              use serial ordering for the specified side (s for
+                                source, d for dest, b for both sides)
+          -n N, --retry=N       on failure, retry up to N times [Default: 0]
+          -p PORT, --port=PORT  set the first listen port [Default: 40010]
+          -r                    copy files recursively [Default: On]
+          -t THREADS            set the total number of parallel streams [Default: 8]
+          -s SIZE, --size=SIZE  number of source device bytes to transfer
+          -v                    create a log file
+          -V                    add timestamp output to log
+          -x REQSIZE, --reqsize=REQSIZE
+                                size in bytes of each I/O operation [Default: 8388608]
+
