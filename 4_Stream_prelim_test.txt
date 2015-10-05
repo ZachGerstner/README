@@ -1,0 +1,25 @@
+Gerstner Zachary I.
+9 September 2015
+
+Purpose: Transfer 1TB with 4 streams between ofstest014 and wagonare.
+===============================================================================
+/scratch/wagonaire-md3260/serial/zigerst
+
+1. Before beginning ensure that you can access your host and destination
+   without a password! Otherwise xdd will not be allowed to function properly.
+
+2. Followed install xdd procedure
+        -see XDD_install.txt
+
+3. Obtained a 1TB tarball of sra files
+        -in /nlmills/zach
+3. Initiated the transfer from plametto ofstest014 to wagonaire01-clemson
+        ' xddmcp -t 4 <.tar> u6001484@wagonaire01-clemson.chpc.utah.edu:/uufs/
+                chpc.utah.edu/common/home/u6001484'
+4. Recorded results
+
+5. repeated steps 3&4 two more times
+        -note: ENSURE THAT THE .TAR IS REMOVED BEFORE EACH TRANSFER! possible
+                to exceed avaliable storage.
+
+6. Generated graphs with std error bars.
