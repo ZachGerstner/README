@@ -1,0 +1,74 @@
+Gerstner Zachary I.
+17 September 2015
+
+Purpose: XDD Parameter Sweep with 1TB tarball and 1TB serial transfers
+===============================================================================
+Prerequisits: must have xdd installed (see XDD_install.txt)
+
+Sweep 1: Streams(tarball)
+----------------------------------------------------------
+Date Conducted: 17 September 2015
+1. cloned script from nlmills account
+
+2. Tarred approximately 1TB group of sra files on ofstest014
+        note: Will take up a LOT of memory
+        note: Will take about a day to tar
+
+3. Began a screen session (recommended due to 10ish hour run time)
+        'screen'
+
+4. modified script (Sections to be modified are labelled)
+
+5.  Ran script
+        'sh script01.sh'
+
+6. Disconnected from screen
+        'ctrl+a d'
+
+7. Upon completion of transfer captured stdout
+        note: BE VERY CARFUL HERE YOU MESS THIS UP THEN YOU LOSE THE DATA!!
+        'ctrl+A : hardcopy -h screen.log'
+
+8. Convert the printed rate to Megabytes per second
+        x*1.024
+
+Note: Transfer rates generated from this test may be effected if the tar is not
+        deleted from destination machine after EACH transfer. This is due to
+        the lack of overhead from file writing housekeeping.
+
+Note: Had to re-run this test due to the script not successfully removing the
+        tar from destination machine.
+
+Sweep 2: Blocksize with best streams from Sweep 1(tarball)
+----------------------------------------------------------
+Date Conducted: 21 September 2015
+note: Make sure the previous screen session was properly ended will cause
+        problems later
+
+1. Cloned Script from nlmills github account
+        'git clone transfer02.sh'
+2. Began a screen session (recommended due to 10ish hour run time)
+        'screen'
+        note: used same tarball from Sweep 1.
+
+3. modified script (Sections to be modified are labelled)
+
+4. ran script
+        'sh transfer02.sh'
+
+5. Disconnected from screen session
+        'ctrl+a d'
+
+6. Upon completion of transfer captured stdout
+        note:BE VERY CAREFUL HERE YOU MESS THIS UP THEN DATA WILL BE LOST!!
+        'ctrl+A : hardcopy -h screen2.log'
+
+7. Convert the printed rates to Megabytes per second
+        'x*1.024
+
+note: Had to re-run this experiment I somehow cancelled the screen session before
+        recording the data.
+
+Sweep 1.2: Re-Run Stream Sweep Due to Network Changes
+------------------------------------------------------
+Repeated Sweep 1 after Utah did a major network update
